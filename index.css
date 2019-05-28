@@ -1,0 +1,104 @@
+/* body {
+    background-color: #222
+}
+
+#table {
+    display: flex;
+    flex-wrap: wrap;
+    border: 2px solid rgb(211, 39, 202);
+    width: 100%;
+
+    height: 700px;
+
+}
+.card {
+    background-color: rgb(52, 96, 167);
+    border: 2px solid rgb(75, 224, 38);
+    width: 150px;
+    height: 150px;
+    margin: 1%;
+} */
+
+
+
+body {
+    background-color: rgb(37, 37, 47);
+    color: white;
+}
+
+.row {
+    font-size: 24pt;
+    
+    text-align: center;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    border: 2px solid rgb(185, 44, 119);
+    /* margin: 0 auto; */
+    
+}
+
+.up {
+    border: 4px solid rgb(29, 202, 29);
+}
+
+.card {
+    border-radius: 5%;    
+    width: 30px;
+    height: 30px;
+    padding: 4%;
+    margin: 1.5% 3%;
+}
+
+.up:hover {
+    border: 4px double yellow;
+}
+
+#hand div:hover {
+    border: 4px double yellow;
+}
+
+#hand {
+    display: flex;
+    border: 1px solid slateblue;
+    padding: 2%;
+    margin: 1% 3%;
+    justify-content: center;
+    flex-wrap: wrap;
+
+}
+
+
+#hand div {
+    border-radius: 5%;
+    border: 4px solid slategrey;
+    width: 10px;
+    height: 10px;
+    padding: 3%;
+    margin: .1% .2%;
+
+
+}
+
+.down {
+    border: 4px dashed rgb(130, 173, 130);
+    
+
+}
+
+/* #hand .hold {
+    border-radius: 5%;    
+    width: 30px;
+    height: 30px;
+    padding: 4%;
+    margin: 1.5% 3%; */
+/* } */
+.hovered {
+    color: red;
+}
+
+body #hand .invisible {
+    border: rgba(255,255,255, 0);
+    color: rgba(255,255,255, 0);
+
+}
