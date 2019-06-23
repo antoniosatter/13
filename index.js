@@ -54,6 +54,7 @@ class Card {
         this.val = val;
         this.loc = loc;
         this.up = up;
+
     }
     
     flip(){
@@ -198,47 +199,61 @@ const joker = () => {
     cardsHTML.forEach(c => c.addEventListener('click', useJoker))
 }
 
-// needs work
+
+// can flip face up card but not faced down
 /////////////////////
 const useJoker = (e) => {
-    console.log('TESTING JOKER')
     cardsHTML.forEach(c => c.removeEventListener('click', useJoker));
     let selection = getTableCardFromDiv(e.target);
+    console.log(selection)
     if (!selection.up) {
-        seleection.flip();
+
+        selection.flip();
         findFlip(selection.val)
     }
     else if (selection.val === '$') {
         //flips joker if joker is selected
         return selection.flip();
     }
-    return findFlip(e.target.innerText);
+    return findFlip(selection.val);
 }
 ////////////////////////////
-const findFlip = (value) => {
-    if(value === '$') {
-        joker();
-    } else {
-        let find = table.cards.find(c => c.loc.getAttribute('id') === value);
-        // console.log(find)
-        
-        if(find.loc.getAttribute('id') === find.val && find.up) return find;
-        if(find.up){
-            find.flip()
+    const findFlip = (value) => {
+        setTimeout( () => {
+
+            if(value === '$') {
+                
+                joker();
+            } else {
+                let find = table.cards.find(c => c.loc.getAttribute('id') === value);
+                
+                console.log(find)
+                
+                //////////////////////////////
+                if(find.loc.getAttribute('id') === find.val) {
+                    console.log('SAME');
+                    find.flip()
+                    return find;
+                }
+                /////////////////////
+                if(find.up){
+                    find.flip()
+                    
+                    return find;
+                }
+                find.flip()
+                return findFlip(find.val)
+            }
+
+        }, 900)
             
-            return find;
-        }
-        find.flip()
-        return findFlip(find.val)
-    }
-    
 }
 
 
 
 
 let gameStarted = false;
-const firstClick = (event) => {
+const firstClick = (event, prev = null) => {
     let catalyst;
     if(!gameStarted) {
         // uses Card class loc to connect cardsHTML and table.cards
@@ -251,8 +266,9 @@ const firstClick = (event) => {
         console.log(catalyst)
         //############################3
         gameStarted = true;
-        
-        findFlip( catalyst.val, catalyst.loc)
+        if(catalyst.val !== catalyst.loc.getAttribute('id')) {
+            findFlip( catalyst.val, catalyst.loc)
+        }
     }
     
     return catalyst;
@@ -281,18 +297,15 @@ let upOrDown = (c) => {
 
     function dragStart() {
         this.className += ' hold';
-        console.log('dragstart',this)
+        
         setTimeout(() => (this.className = ' invisible'), 0)
         this.id = 'holding';
-        console.log('start')
-
 
     }
     
     function dragEnd() {
-        console.log('end')
         this.className = 'card ';
-        console.log('dragend',this)
+    
         this.removeAttribute('id');
 
     
@@ -304,19 +317,19 @@ let upOrDown = (c) => {
 
     function dragOver(e) {
         e.preventDefault()
-        console.log('over')
+        // console.log('over')
     }
     
     function dragEnter(e) {
         e.preventDefault()
-        this.className += ' hovered'
-        console.log(this)
-        console.log('enter')
+        // this.className += ' hovered'
+        // console.log(this)
+        // console.log('enter')
     }
     
     function dragLeave() {
         this.className = `card ${upOrDown(getTableCardFromDiv(this))}`
-        console.log('leave')
+        // console.log('leave')
     }
     
     function dragDrop() {
@@ -329,7 +342,7 @@ let upOrDown = (c) => {
             
             replacement.parentNode.removeChild(replacement);
             findFlip(replacement.innerText); 
-            console.log('drop')
+       
         }
         this.className = `card ${upOrDown(getTableCardFromDiv(this))}`;
     }
